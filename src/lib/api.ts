@@ -1,11 +1,15 @@
 // Client API vers le worker Mac (queue_server.py).
-// URL configurable : par défaut le Mac en local. En production (Vercel),
-// remplacer QUEUE_BASE par l'URL Tailscale Funnel du Mac, ex. :
-//   const QUEUE_BASE = "https://mac-mini-de-laurent.tail4ff741.ts.net:8085";
+// En local : 127.0.0.1:8085. En production (Vercel) : Tailscale Funnel du Mac
+// (port 443 par défaut — le port 8085 externe n'est pas servi).
+const FUNNEL = "https://mac-mini-de-laurent.tail4ff741.ts.net";
 export const QUEUE_BASE =
   (typeof window !== "undefined" &&
     (window as any).__MBCONFIG__?.queueBase) ||
-  "http://127.0.0.1:8085";
+  (process.env.NEXT_PUBLIC_QUEUE_BASE ||
+    (typeof window !== "undefined" &&
+      window.location.hostname.endsWith(".vercel.app")
+      ? FUNNEL
+      : "http://127.0.0.1:8085"));
 
 export type Link = {
   id: number;
