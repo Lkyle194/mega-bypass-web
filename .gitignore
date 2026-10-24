@@ -1,0 +1,9 @@
+node_modules
+.next
+out
+.vercel
+.env*.local
+queue/queue.db
+queue/queue.db-*
+.DS_Store
+*.tsbuildinfo
